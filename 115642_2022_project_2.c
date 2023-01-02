@@ -321,11 +321,7 @@ int main() {
             case 'h': {
                 h(head);
                 break;
-            }
-            case 'r': {
-                break;
-            }
-            
+            }            
             case 'k': {
                 if (head != NULL) {
                     PEOPLE* free_variable;
