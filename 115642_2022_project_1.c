@@ -1,12 +1,13 @@
-/*projekt 1 v jazyku c
-Autor: Filip Navrkal
-Datum: 23. 10. 2022*/
+/*
+Project #1
+Author: Filip Navrkal
+Date: 23. 10. 2022
+*/
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-// spocita pocet cislic v cisle
 int digit_count(int cislo) {
     int count = 0;
     while (cislo != 0) {
@@ -16,7 +17,6 @@ int digit_count(int cislo) {
     return count;
 }
 
-// spocita pocet cislic v cisle
 int digit_countl(long long int cislo) {
     int count = 0;
     while (cislo != 0) {
@@ -26,7 +26,6 @@ int digit_countl(long long int cislo) {
     return count;
 }
 
-// sortne prvky pola cas a podla neho aj prvky pola hodnota
 void array_sort(int** cas, int** datum, double** hodnota, int dlzka) {
     int temp_cas;
     int temp_datum;
@@ -57,7 +56,6 @@ void array_sort(int** cas, int** datum, double** hodnota, int dlzka) {
     free(merge);
 }
 
-// sortne prvky pola cas a podla neho aj prvky pola hodnota
 void array_sort2(long long int** merge, double** hodnota, int dlzka) {
     long long int temp_merge;
     double temp_hodnota;
@@ -113,8 +111,8 @@ void c(FILE* fr) {
     char c;
     char cache[20];
     rewind(fr);
-    while ((c = fgetc(fr)) != EOF) {     //cyklus, ktory nacitava vsetky znaky v subore
-        if (c == '\n')   // spocitaju sa riadky
+    while ((c = fgetc(fr)) != EOF) {     
+        if (c == '\n')   
             pocitadlo_riadkov++;
     }
     rewind(fr);
@@ -194,12 +192,12 @@ FILE* v(FILE* fr, int dynamic, int pocet_zaznamov, long long int* id_d, char** m
     char cache[20];
     int zaznam = 0;
     if (fr == NULL) {
-        if ((fr = fopen("dataloger.txt", "r")) == NULL)   //subor sa nepodarilo otvorit 
+        if ((fr = fopen("dataloger.txt", "r")) == NULL)    
             printf("Neotvoreny subor\n");
     }
-    if (dynamic == 0) { // dynamicke polia este neboli vytvorene
-        rewind(fr); // vrati smernik suboru na zaciatok
-        while (fgets(cache, 13, fr) != NULL) {  // pokial nie sme na konci suboru
+    if (dynamic == 0) { 
+        rewind(fr); 
+        while (fgets(cache, 13, fr) != NULL) {  
             id = atoll(cache);
             printf("ID cislo mer. osoby: %lld\n", id);
 
@@ -216,7 +214,7 @@ FILE* v(FILE* fr, int dynamic, int pocet_zaznamov, long long int* id_d, char** m
             fgets(cache, sizeof(cache), fr);
             cas = atoi(cache);
             printf("Cas merania: ");
-            // cas si ukladame do intu a v pripade, ze nie je stvormiestny na zaciatok doplnime nulu
+            
             if (digit_count(cas) != 4)
                 printf("0");
             printf("%d\n", cas);
@@ -230,14 +228,14 @@ FILE* v(FILE* fr, int dynamic, int pocet_zaznamov, long long int* id_d, char** m
             printf("\n");
         }
     }
-    else if (dynamic == 1) {    // vypisujeme udaje uz z dynamickych poli
+    else if (dynamic == 1) {    
         for (zaznam = 0; zaznam < pocet_zaznamov; zaznam++) {
             printf("ID cislo mer. osoby: %lld\n", *(id_d + zaznam));
             printf("Mer. modul: %s\n", *(modul_d + zaznam));
             printf("Typ mer. veliciny: %s\n", *(velicina_d + zaznam));
             printf("Hodnota merania: %f\n", *(hodnota_d + zaznam));
             printf("Cas merania: ");
-            // cas si ukladame do intu a v pripade, ze nie je stvormiestny na zaciatok doplnime nulu
+           
             if (digit_count(*(cas_d + zaznam)) != 4)
                 printf("0");
             printf("%d\n", *(cas_d + zaznam));
@@ -257,12 +255,12 @@ int n(FILE *fr, int *dynamic, long long int **id, char ***modul, char ***velicin
     }
     else {
         rewind(fr);
-        while ((c = fgetc(fr)) != EOF) {     //cyklus, ktory nacitava vsetky znaky v subore
-            if (c == '\n')   // spocitaju sa riadky
+        while ((c = fgetc(fr)) != EOF) {     
+            if (c == '\n')   
                 pocitadlo_riadkov++;
         }
-        pocitadlo_zaznamov = (pocitadlo_riadkov + 1) / 7;   // z poctu riadkov sa vyrata pocet zaznamov
-        if (*dynamic == 1) {    // dynamicke polia uz boli vytvorene, uvolnime ich a nasledne vytvorime nanovo
+        pocitadlo_zaznamov = (pocitadlo_riadkov + 1) / 7;   
+        if (*dynamic == 1) {    
             free(*id);
             *id = NULL;
 
@@ -298,7 +296,7 @@ int n(FILE *fr, int *dynamic, long long int **id, char ***modul, char ***velicin
         *hodnota = (double*)malloc(pocitadlo_zaznamov * sizeof(double));
         *datum = (int*)malloc(pocitadlo_zaznamov * sizeof(int));
         *cas = (int*)malloc(pocitadlo_zaznamov * sizeof(int));
-        for (riadok = 0; riadok <= pocitadlo_riadkov; riadok++) {   // nacitame vsetky udaje do dynamickych poli
+        for (riadok = 0; riadok <= pocitadlo_riadkov; riadok++) {   
             switch (riadok % 7) {
                 case 0: {
                     fgets(cache, 13, fr);
@@ -336,7 +334,7 @@ int n(FILE *fr, int *dynamic, long long int **id, char ***modul, char ***velicin
                 }
             }
         }
-        *dynamic = 1;   // nastavime premennu, ze dynamicke polia uz boli vytvorene
+        *dynamic = 1;  
         return pocitadlo_zaznamov;
     }
 }
@@ -354,15 +352,15 @@ void o(FILE* fr, int dynamic, int pocet_zaznamov, char** modul_d, char** velicin
     int pocitadlo_zaznamov = 0;
     int zaznam;
     scanf("%s %s", modul, velicina);
-    if (!dynamic) { // dynamicke polia este nevytvorene
+    if (!dynamic) { 
         if (fr == NULL)
             printf("Neotvoreny subor.\n");
         rewind(fr);
-        while ((c = fgetc(fr)) != EOF) {     //cyklus, ktory nacitava vsetky znaky v subore
-            if (c == '\n')   // spocitaju sa riadky
+        while ((c = fgetc(fr)) != EOF) {     
+            if (c == '\n')   
                 pocitadlo_riadkov++;
         }
-        pocitadlo_zaznamov = (pocitadlo_riadkov + 1) / 7;   // z poctu riadkov sa vyrata pocet zaznamov
+        pocitadlo_zaznamov = (pocitadlo_riadkov + 1) / 7;   
         rewind(fr);
         char modul_subor[5];
         char velicina_subor[4];
@@ -385,15 +383,15 @@ void o(FILE* fr, int dynamic, int pocet_zaznamov, char** modul_d, char** velicin
             fgets(cache, 20, fr);
             datum_subor = atoi(cache);
             fgets(cache, 20, fr);
-            if ((strstr(modul_subor, modul) != NULL) && (strstr(velicina_subor, velicina) != NULL)) {   // zistujeme, ktore zaznamy maju rovnake hodnoty ako hladane
+            if ((strstr(modul_subor, modul) != NULL) && (strstr(velicina_subor, velicina) != NULL)) {   
                 *(zoznam_casov + pocet) = cas_subor;
                 *(zoznam_datumov + pocet) = datum_subor;
                 *(zoznam_hodnot + pocet) = hodnota_subor;
                 pocet++;
             }
         }
-        array_sort(&zoznam_casov, &zoznam_datumov, &zoznam_hodnot, pocet);   // vytriedime polia podla casu
-        for (int najdeny_zaznam = 0; najdeny_zaznam < pocet; najdeny_zaznam++) {    // vypiseme odpovedajuce polia
+        array_sort(&zoznam_casov, &zoznam_datumov, &zoznam_hodnot, pocet);   
+        for (int najdeny_zaznam = 0; najdeny_zaznam < pocet; najdeny_zaznam++) {    
             printf("%s %s %d ", modul, velicina, *(zoznam_datumov + najdeny_zaznam));
             if (digit_count(*(zoznam_casov + najdeny_zaznam)) != 4)
                 printf("0");
@@ -405,15 +403,15 @@ void o(FILE* fr, int dynamic, int pocet_zaznamov, char** modul_d, char** velicin
         zoznam_datumov = (int*)malloc(pocitadlo_zaznamov * sizeof(int));
         zoznam_hodnot = (double*)malloc(pocitadlo_zaznamov * sizeof(double));
         for (int zaznam = 0; zaznam < pocet_zaznamov; zaznam++) {
-            if ((strstr(*(modul_d + zaznam), modul) != NULL) && (strstr(*(velicina_d + zaznam), velicina) != NULL)) {   // zistujeme, ktore zaznamy maju rovnake hodnoty ako hladane
+            if ((strstr(*(modul_d + zaznam), modul) != NULL) && (strstr(*(velicina_d + zaznam), velicina) != NULL)) {   
                 *(zoznam_casov + pocet) = *(cas_d + zaznam);
                 *(zoznam_datumov + pocet) = *(datum_d + zaznam);
                 *(zoznam_hodnot + pocet) = *(hodnota_d + zaznam);
                 pocet++;
             }
         }
-        array_sort(&zoznam_casov, &zoznam_datumov, &zoznam_hodnot, pocet);   // vytriedime polia podla casu
-        for (int najdeny_zaznam = 0; najdeny_zaznam < pocet; najdeny_zaznam++) {    // vypiseme odpovedajuce polia
+        array_sort(&zoznam_casov, &zoznam_datumov, &zoznam_hodnot, pocet);   
+        for (int najdeny_zaznam = 0; najdeny_zaznam < pocet; najdeny_zaznam++) {    
             printf("%s %s %d ", modul, velicina, *(zoznam_datumov + najdeny_zaznam));
             if (digit_count(*(zoznam_casov + najdeny_zaznam)) != 4)
                 printf("0");
@@ -435,20 +433,20 @@ void s(FILE* fr, int dynamic, int pocet_zaznamov, char** modul_d, char** velicin
     int pocet = 0;
     int zaznam;
     scanf("%s %s", modul, velicina);
-    if (!dynamic) { // dynamicke polia este nevytvorene
+    if (!dynamic) { 
         printf("Polia nie su vytvorene.\n");
     }
-    else {  // dynamicke polia uz vytvorene
+    else {  
         zoznam_merged = (long long int*)malloc(pocet_zaznamov * sizeof(long long int));
         zoznam_hodnot = (double*)malloc(pocet_zaznamov * sizeof(double));
         for (int zaznam = 0; zaznam < pocet_zaznamov; zaznam++) {
-            if ((strstr(*(modul_d + zaznam), modul) != NULL) && (strstr(*(velicina_d + zaznam), velicina) != NULL)) {   // zistujeme, ktore zaznamy maju rovnake hodnoty ako hladane
+            if ((strstr(*(modul_d + zaznam), modul) != NULL) && (strstr(*(velicina_d + zaznam), velicina) != NULL)) {   
                 *(zoznam_merged + pocet) = (long long int)*(datum_d + zaznam) * 10000 + (long long int)*(cas_d + zaznam);
                 *(zoznam_hodnot + pocet) = *(hodnota_d + zaznam);
                 pocet++;
             }
         }
-        array_sort2(&zoznam_merged, &zoznam_hodnot, pocet);   // vytriedime polia podla casu
+        array_sort2(&zoznam_merged, &zoznam_hodnot, pocet);   
         FILE* fr2;
         fr2 = fopen("vystup_S.txt", "w");
         if (pocet == 0) {
@@ -485,10 +483,8 @@ int z(FILE* fr, int pocet_zaznamov, int dynamic, long long int** id, char*** mod
 
 
 int main() {
-    FILE* fr = NULL; //deklarujem premmennu pre pracu so suborom
+    FILE* fr = NULL; 
 
-    //premmenne, na ktorych bude alokovana pamat
-    //nastavenie premmenych na NULL  
     char** modul = NULL, ** velicina = NULL, vstup;
     long long int *id = NULL;
     int *cas = NULL, *datum = NULL;
@@ -496,7 +492,7 @@ int main() {
     double *hodnota = NULL;
 
     
-    while (1) { //nekonecny cyklus 
+    while (1) { 
         scanf("%c", &vstup);    
         switch (vstup) {
             case 'v': {
@@ -530,7 +526,7 @@ int main() {
                 break;
             }
             case 'k':{
-                if (dynamic) {     // dealokacia dynamickych poli po zadani k
+                if (dynamic) {     
                     for (int i = 0; i < pocet_zaznamov; i++) {
                         free(*(modul + i));
                         *(modul+ i) = NULL;               
