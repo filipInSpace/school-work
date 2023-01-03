@@ -515,12 +515,6 @@ int main() {
                 s(fr, dynamic, pocet_zaznamov, modul, velicina, hodnota, cas, datum);
                 break;
             }
-            case 'h': {
-                break;
-            }
-            case 'p': {
-                break;
-            }
             case 'z': {
                 pocet_zaznamov = z(fr, pocet_zaznamov, dynamic, &id, &modul, &velicina, &hodnota, &cas, &datum);
                 break;
